@@ -32,3 +32,5 @@
 *.app
 /.vs/primer_Cpp/config
 /.vs
+/chapter1/infile
+/chapter1/outfile
