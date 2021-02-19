@@ -1,5 +1,7 @@
+class Y;
+
 class X {
-	Y* yptr;
+	Y* yptr = nullptr;
 };
 
 class Y {
