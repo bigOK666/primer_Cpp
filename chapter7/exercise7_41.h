@@ -1,30 +1,33 @@
 #include<string>
 #include<iostream>
 
-struct Sales_data;
-std::istream& read(std::istream&, Sales_data&);
+//struct Sales_data;
+//std::istream& read(std::istream&, Sales_data&);
 
 struct Sales_data {
 	friend std::istream& read(std::istream& is, Sales_data& item);
 	friend std::ostream& print(std::ostream& os, const Sales_data& item);
 	friend Sales_data add(const Sales_data& lhs, const Sales_data& rhs);
 public:
-	Sales_data() = default;
-	Sales_data(const std::string& s) :bookNo(s) {};
-	Sales_data(const std::string& s, unsigned us, double p) : bookNo(s), units_sold(us), revenue(us* p) {};
-	Sales_data(std::istream& is)
+	Sales_data(const std::string& s, unsigned us, double p) : bookNo(s), units_sold(us), revenue(us* p) { std::cout << "Three parameters"<<std::endl; }
+
+	Sales_data() :Sales_data("", 0, 0) { std::cout << "delegating constructor default" << std::endl; }
+	Sales_data(const std::string& s) :Sales_data(s, 0, 0) { std::cout << "delegating constructor one parameter"<<std::endl; }
+	
+	Sales_data(std::istream& is):Sales_data()
 	{
 		read(is, *this);
+		std::cout << "read in with delegating constructor" << std::endl;
 	}
 	std::string isbn() const { return bookNo; };
 	Sales_data& combine(const Sales_data&);
-	
+
 private:
 	std::string bookNo;
 	unsigned units_sold = 0;
 	double revenue = 0.0;
-	double avg_price() const;//should not contain body
-	
+	double avg_price() const;
+
 
 
 };
