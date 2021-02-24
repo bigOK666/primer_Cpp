@@ -8,5 +8,5 @@ int main()
 	vector<double> v_d(l_i.begin(), l_i.end());
 
 	vector<int> v_i{ 1,2,3 };
-	vector<double> v_d(v_i.begin(), v_i.end());
+	vector<double> v_d_i(v_i.begin(), v_i.end());
 }
