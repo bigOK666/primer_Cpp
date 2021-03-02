@@ -5,7 +5,7 @@
 using namespace std;
 
 bool moreThan5(const string& s) {
-	return s.size() > 5;
+	return s.size() >= 5;
 }
 
 int main()
