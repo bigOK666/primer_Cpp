@@ -22,16 +22,21 @@ public:
 	const std::string& front() const;
 	const std::string& back() const;
 
-	StrBlobPtr begin() { return StrBlobPtr(*this); }
-	StrBlobPtr end() { return StrBlobPtr(*this, data->size()); }
+	StrBlobPtr begin();
+	StrBlobPtr end();
 
-	ConstStrBlobPtr cbegin() const { return ConstStrBlobPtr(*this); }
-	ConstStrBlobPtr cend() const { return ConstStrBlobPtr(*this, data->size()); }
+	ConstStrBlobPtr cbegin() const;
+	ConstStrBlobPtr cend() const;
+
+	std::string& operator[](size_type i) { return (*data)[i]; } // 省略了check
+	const std::string& operator[](size_type i) const { return (*data)[i]; } // 省略了check
 
 private:
 	std::shared_ptr<std::vector<std::string>> data;
 	void check(size_type i, const std::string& msg) const;
 };
+
+
 
 void StrBlob::check(size_type i, const std::string& msg) const {
 	if (i >= data->size()) {
@@ -111,3 +116,9 @@ private:
 
 
 };
+
+StrBlobPtr StrBlob::begin() { return StrBlobPtr(*this); }
+StrBlobPtr StrBlob::end() { return StrBlobPtr(*this, data->size()); }
+
+ConstStrBlobPtr StrBlob::cbegin() const { return ConstStrBlobPtr(*this); }
+ConstStrBlobPtr StrBlob::cend() const { return ConstStrBlobPtr(*this, data->size()); }
