@@ -19,8 +19,10 @@ HasPtr::HasPtr(const HasPtr& original) :
 
 HasPtr& HasPtr::operator=(const HasPtr& original)
 {
+	//这样能满足自身赋值给自身
+	auto copy = new std::string(*original.ps);
 	delete ps;
-	ps = new std::string(*original.ps);
+	ps = copy;
 	i = original.i;
 	return *this;
 }

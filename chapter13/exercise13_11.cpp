@@ -19,7 +19,9 @@ HasPtr::HasPtr(const HasPtr& original) :
 
 HasPtr& HasPtr::operator=(const HasPtr& original)
 {
-	ps = new std::string(*original.ps);
+	auto copy = new std::string(*original.ps);
+	delete ps;
+	ps = copy;
 	i = original.i;
 	return *this;
 }
