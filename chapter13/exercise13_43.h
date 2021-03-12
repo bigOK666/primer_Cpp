@@ -1,6 +1,7 @@
 #include<string>
 #include<memory>
 #include<initializer_list>
+#include<algorithm>
 
 class StrVec {
 public:
@@ -8,7 +9,7 @@ public:
 	StrVec(std::initializer_list < std::string> il);
 	StrVec(const StrVec&);
 	StrVec& operator=(const StrVec&);
-	std::string& operator[](size_t n){ return *(elements + n); }
+	std::string& operator[](size_t n) { return *(elements + n); }
 	~StrVec();
 	void push_back(const std::string&);
 	size_t size() const { return first_free - elements; }
@@ -48,9 +49,12 @@ std::pair<std::string*, std::string*> StrVec::alloc_n_copy(const std::string* b,
 void StrVec::free()
 {
 	if (elements) {
+
+		std::for_each(elements, first_free, [this](std::string &sp) {alloc.destroy(&sp); });
+		/*
 		for (auto p = first_free; p != elements;) {
 			alloc.destroy(--p);
-		}
+		}*/
 		alloc.deallocate(elements, cap - elements);
 	}
 }
@@ -62,7 +66,7 @@ StrVec::StrVec(const StrVec& s)
 	first_free = cap = newdata.second;
 }
 
-StrVec::StrVec(std::initializer_list <std::string> il) 
+StrVec::StrVec(std::initializer_list <std::string> il)
 {
 	auto data = alloc_n_copy(il.begin(), il.end());
 	elements = data.first;
