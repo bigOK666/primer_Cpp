@@ -1,12 +1,15 @@
 #include<algorithm>
 #include<memory>
+#include<iostream>
 //this string is like a vector of chars
 class String {
 public:
-	
+
 	String(const char* a = nullptr);
 	String(const String&);
 	String& operator=(const String&);
+	String(String&&) noexcept;
+	String& operator=(String&&) noexcept;
 	~String();
 
 	const char* c_str() const { return elements; }
@@ -18,7 +21,7 @@ private:
 	static std::allocator<char> alloc;
 
 	std::pair<char*, char*> alloc_n_copy(const char*, const char*);
-	
+
 	void free();
 };
 
@@ -71,5 +74,25 @@ String& String::operator=(const String& rhs)
 	elements = newptr.first;
 	end = newptr.second;
 
+	return *this;
+}
+
+String::String(String&&s) noexcept:
+	elements(s.elements), end(s.end)
+{
+	s.elements = s.end = nullptr;
+	std::cout << "String &&s" << std::endl;
+}
+
+String& String::operator=(String&&rhs) noexcept
+{
+	if (this != &rhs) {
+		free();
+		elements = rhs.elements;
+		end = rhs.end;
+		rhs.elements = rhs.end = nullptr;
+	}
+
+	std::cout << "operator String&&rhs" << std::endl;
 	return *this;
 }
