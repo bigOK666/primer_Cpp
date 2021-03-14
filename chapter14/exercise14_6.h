@@ -12,7 +12,7 @@ public:
     Sales_data(const std::string& s) : Sales_data(s, 0, 0.0f) { }
     Sales_data(std::istream& is);
     Sales_data& operator+=(const Sales_data&);
-    
+
     std::string isbn() const { return bookNo; }
 
 private:
@@ -33,10 +33,10 @@ std::istream& operator>>(std::istream& is, Sales_data& s)
 }
 std::ostream& operator<<(std::ostream& os, const Sales_data& s)
 {
-    os << s.bookNo << " " << s.units_sold << " " << s.revenue;
+    std::cout << s.bookNo << " " << s.units_sold << " " << s.revenue;
     return os;
 }
-Sales_data operator+(const Sales_data &s1, const Sales_data &s2)
+Sales_data operator+(const Sales_data& s1, const Sales_data& s2)
 {
     if (s1.bookNo != s2.bookNo) {
         std::cout << "Not the same book" << std::endl;
@@ -49,15 +49,15 @@ Sales_data operator+(const Sales_data &s1, const Sales_data &s2)
         s3.revenue = s1.revenue + s2.revenue;
         return s3;
     }
-    
-   
+
+
 };
 
-Sales_data& Sales_data::operator+=(const Sales_data &s1)
+Sales_data& Sales_data::operator+=(const Sales_data& s1)
 {
     if (s1.bookNo != bookNo) {
         std::cout << "Not the same book" << std::endl;
-        
+
     }
     else {
         units_sold += s1.units_sold;
