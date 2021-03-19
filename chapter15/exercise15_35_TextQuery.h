@@ -55,10 +55,25 @@ class QueryResult {
 	friend ostream& print(ostream&, QueryResult);
 public:
 	QueryResult() :t(0) {}
-	QueryResult(size_t timeNr, map<size_t, string>& result_map) :t(timeNr), r(result_map) {}
+	QueryResult(std::string s, size_t timeNr, map<size_t, string>& result_map, std::shared_ptr<std::vector<std::string>> f) :sought(s), t(timeNr), r(result_map), file(f) 
+	{
+		for (auto item : r) 
+		{
+			lines->insert(item.first);
+		}
+	}
+
+	std::set<size_t>::iterator begin() { return lines->begin(); }
+	std::set<size_t>::iterator end() { return lines->end(); }
+
+	std::shared_ptr<std::vector<std::string>> get_file() const { return file; }
+	std::map<size_t, std::string> get_result() const { return r; }
 private:
+	std::string sought;
 	size_t t;
 	map<size_t, string> r;
+	std::shared_ptr<std::set<size_t>> lines;
+	std::shared_ptr<std::vector<std::string>> file;
 };
 
 QueryResult TextQuery::query(const string& s) const
@@ -79,7 +94,7 @@ QueryResult TextQuery::query(const string& s) const
 			//cout << results[nr] << endl;
 		}
 
-		return QueryResult(times, results);
+		return QueryResult(s, times, results, input_data);
 	}
 }
 
