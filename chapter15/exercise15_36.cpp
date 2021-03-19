@@ -33,8 +33,8 @@ class WordQuery :public Query_base {
 	friend class Query;
 	WordQuery(const std::string& s) :query_word(s) { std::cout << "WordQuery constructor" << std::endl; }
 
-	QueryResult eval(const TextQuery& t) const { return t.query(query_word); }
-	std::string rep() const { return query_word; std::cout << "WordQuery rep()" << std::endl;}
+	QueryResult eval(const TextQuery& t) const override { return t.query(query_word); }
+	std::string rep() const override { return query_word; std::cout << "WordQuery rep()" << std::endl;}
 	std::string query_word;
 };
 //now we can implement Query constructor
