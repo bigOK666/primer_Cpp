@@ -2,7 +2,7 @@
 #include<functional>
 template <typename T> class shred_ptr {
 public:
-	schred_ptr():ptr(nullptr), ref_count{new std::size_t(1)}, deleter(DebugDelete()){}
+	shred_ptr():ptr(nullptr), ref_count{new std::size_t(1)}, deleter(DebugDelete()){}
 	explicit shred_ptr(T *raw_ptr):ptr(raw_ptr), ref_count(new std::size_t(1)), deleter(DebugDelete()){}
 	shred_ptr(const shred_ptr& other) :ptr(other.ptr), ref_count(other.ref_count), deleter(other.deleter) { ++* ref_count; }
 	shred_ptr(shred_ptr&& other) :ptr(other.ptr), ref_count(other.ref_count), deleter(std::move(other.deleter)) { other.ptr = nullptr; other.ref_count = nullptr; }
