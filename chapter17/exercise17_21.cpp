@@ -5,8 +5,10 @@
 #include<sstream>
 using namespace std;
 class Person_info {
+	
 public:
-	std::string phones{"123-234-2334"};
+	std::vector<std::string> phones;
+	Person_info(const string& s = "123-123-1234") :phones(std::vector<std::string>{s}) {}
 };
 bool valid(const smatch& m) {
 	if (m[1].matched)
@@ -17,15 +19,15 @@ bool valid(const smatch& m) {
 
 int main()
 {
-	string phone = "(\\()?(\\d{3})(\\))?([-. ])?(\\d{3})([-. ]?(\\d{4})";
+	string phone = "(\\()?(\\d{3})(\\))?([-. ])?(\\d{3})([-. ])?(\\d{4})";
 
 	regex r(phone);
 	string s;
 	//smatch m;
 	vector<Person_info> people;
-	for (const auto& entry : people) {
+	for (Person_info entry : people) {
 		ostringstream formatted, badNums;
-		for (auto& nums : entry.phones) {
+		for (string nums : entry.phones) {
 			for (sregex_iterator it(nums.begin(), nums.end(), r), end_it; it != end_it; ++it) {
 				if (valid(*it)) {
 					cout << "valid: " << it->str() << endl;
