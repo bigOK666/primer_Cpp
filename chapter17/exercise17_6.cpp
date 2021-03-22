@@ -2,6 +2,7 @@
 #include<vector>
 #include<string>
 #include<algorithm>
+#include<iostream>
 class Sales_data {
 	friend bool compareIsbn(const Sales_data&, const Sales_data&);
 public:
@@ -35,12 +36,16 @@ vector<struc_matches> findBook(const vector<vector<Sales_data>>& files, const st
 	for (auto it = files.cbegin(); it != files.cend(); ++it) {
 		auto found = equal_range(it->cbegin(), it->cend(), book, compareIsbn);
 		if (found.first != found.second) {
-			ret.push_back(struc_matches{ it - files.cbegin(), found.first, found.second });
+			ret.push_back(struc_matches{ static_cast<unsigned int>(it - files.cbegin()), found.first, found.second });
 		}
 	}
 	return ret;
 }
 int main()
 {
-
+	vector<Sales_data> v_s{ Sales_data("test1"), Sales_data("test2") };
+	vector<struc_matches> v_sm;
+	unsigned j = 1;
+	v_sm.push_back(struc_matches{ j, v_s.cbegin(), v_s.cend() });
+	std::cout << v_sm[0].i << std::endl;
 }
